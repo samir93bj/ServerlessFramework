@@ -4,14 +4,13 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs12.x
-  profile: serverlessUser
 
 plugins:
-  - serverless-s3-Sync
+  - serverless-s3-sync
 
 custom:
-  s3Syn:
-    - bucketName: myServerlessprojectUpload-1231234
+  s3Sync:
+    - bucketName: server1essprojectupload-22321321321
       localDir: UploadData
   
 
@@ -24,4 +23,4 @@ resources:
     DemoBucketUpload:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: myServerlessprojectUpload-1231234
+        BucketName: server1essprojectupload-22321321321
