@@ -1,8 +1,6 @@
 const Responses = require('./API_responses');
 
 exports.handler = async (event) => {
-	console.log('event', event);
-
 	if (!event.pathParameters || !event.pathParameters.ID) {
 		return Responses._400({mesage: "Missing the ID from the request"});
 	}
