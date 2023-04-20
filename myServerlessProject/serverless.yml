@@ -6,6 +6,15 @@ provider:
   runtime: nodejs12.x
   profile: serverlessUser
 
+plugins:
+  - serverless-s3-Sync
+
+custom:
+  s3Syn:
+    - bucketName: myServerlessprojectUpload-1231234
+      localDir: UploadData
+  
+
 functions:
   hello:
     handler: handler.hello
