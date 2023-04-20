@@ -1,0 +1,11 @@
+service: myserverlessproject
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  profile: serverlessUser
+
+functions:
+  hello:
+    handler: handler.hello
