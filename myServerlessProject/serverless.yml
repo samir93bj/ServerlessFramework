@@ -8,7 +8,6 @@ provider:
 plugins:
   - serverless-s3-sync
   - serverless-offline
-  - serverless-webpack
 
 package: 
   individually: true
@@ -20,14 +19,21 @@ custom:
       localDir: UploadData
   
 
-functions:
-  getUser:
-    handler: lambdas/getUsers.handler
-    events:
-      - http:
-          path: get-user/{ID}
-          method: GET
-          cors: true
+  functions:
+    getUser:
+        handler: lambdas/getUser.handler
+        events:
+          - http:
+                path: get-user/{ID}
+                method: GET
+                cors: true
+
+  helloWorld:
+      handler: handler.hello
+      events:
+        - http:
+            path: helloWorld
+            method: GET
 
 resources:
   Resources:
