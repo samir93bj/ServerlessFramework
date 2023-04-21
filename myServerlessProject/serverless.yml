@@ -8,6 +8,7 @@ provider:
 plugins:
   - serverless-s3-sync
   - serverless-offline
+  - serverless-webpack
 
 package: 
   individually: true
@@ -18,22 +19,20 @@ custom:
     - bucketName: server1essprojectupload-22321321321
       localDir: UploadData
   
-
-  functions:
-    getUser:
-        handler: lambdas/getUser.handler
-        events:
-          - http:
-                path: get-user/{ID}
-                method: GET
-                cors: true
-
+functions:
   helloWorld:
-      handler: handler.hello
-      events:
-        - http:
-            path: helloWorld
+    handler: handler.hello
+    events:
+      - http:
+          path: helloWorld
+          method: GET
+  getUser:
+    handler: lambdas/getUser.handler
+    events:
+      - http:
+            path: get-user/{ID}
             method: GET
+            cors: true
 
 resources:
   Resources:
