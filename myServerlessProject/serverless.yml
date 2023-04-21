@@ -8,6 +8,10 @@ provider:
 plugins:
   - serverless-s3-sync
   - serverless-offline
+  - serverless-webpack
+
+package: 
+  individually: true
 
 custom:
   s3Sync:
