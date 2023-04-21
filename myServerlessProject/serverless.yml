@@ -6,10 +6,12 @@ provider:
   runtime: nodejs12.x
   environment:
     tableName: ${self:custom.tableName}
+    bucketName: ${self:custom.bucketName}
   iamRoleStatements:
     - Effect: Allow
       Action: 
         - dynamodb:*
+        - s3:*
       Resource: '*' 
 
 plugins:
@@ -22,6 +24,7 @@ package:
 
 custom:
   tableName: player-points
+  bucketName: server1essprojectupload-22321321321
   s3Sync:
     - bucketName: server1essprojectupload-22321321321
       localDir: UploadData
@@ -55,12 +58,20 @@ functions:
             method: POST
             cors: true
 
+  createFile:
+      handler: lambdas/endpoints/createFile.handler
+      events:
+        - http:
+              path: create-player-score/{fileName}
+              method: POST
+              cors: true
+
 resources:
   Resources:
     DemoBucketUpload:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: server1essprojectupload-22321321321
+        BucketName: ${self:custom.bucketName}
     
     MyDynamoDbTable:
       Type: AWS::DynamoDB::Table
