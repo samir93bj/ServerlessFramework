@@ -62,7 +62,7 @@ functions:
       handler: lambdas/endpoints/createFile.handler
       events:
         - http:
-              path: create-player-score/{fileName}
+              path: create-file/{fileName}
               method: POST
               cors: true
 
@@ -71,7 +71,7 @@ resources:
     DemoBucketUpload:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:custom.bucketName}
+        BucketName: server1essprojectupload-22321321321
     
     MyDynamoDbTable:
       Type: AWS::DynamoDB::Table
