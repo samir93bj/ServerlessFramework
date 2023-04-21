@@ -1,17 +1,22 @@
 const Responses = require('./API_responses');
 
 exports.handler = async (event) => {
-	if (!event.pathParameters || !event.pathParameters.ID) {
-		return Responses._400({mesage: "Missing the ID from the request"});
+	try {
+		if (!event.pathParameters || !event.pathParameters.ID) {
+			return Responses._400({mesage: "Missing the ID from the request"});
+		}
+	
+		let ID = event.pathParameters.ID;
+	
+		if (data[ID]) {
+			return Responses._200(data[ID]);
+		}
+	
+		return Responses._400({mesage: "No ID in data"})
+	} catch (err) {
+		return Responses._400({mesage: err.message})
 	}
-
-	let ID = event.pathParameters.ID;
-
-	if (data[ID]) {
-		return Responses._200(data[ID]);
-	}
-
-	return Responses._400({mesage: "No ID in data"})
+	
 }
 
 const data = {
