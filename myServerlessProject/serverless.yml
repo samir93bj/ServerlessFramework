@@ -23,8 +23,8 @@ provider:
     usagePlan:
       - free:
           quota:
-          limit: 1000
-          period: MONTH
+            limit: 1000
+            period: MONTH
         throttle:
           rateLimit: 5
           burstLimit: 20
