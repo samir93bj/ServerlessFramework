@@ -25,9 +25,9 @@ provider:
           quota:
             limit: 1000
             period: MONTH
-        throttle:
-          rateLimit: 5
-          burstLimit: 20
+          throttle:
+            rateLimit: 5
+            burstLimit: 20
       - paid:
           quota:
             limit: 1000
