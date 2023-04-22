@@ -13,6 +13,8 @@ provider:
         - dynamodb:*
         - s3:*
       Resource: '*' 
+  apiKeys:
+    - MyFirstApiKey
 
 plugins:
   - serverless-s3-sync
@@ -36,6 +38,7 @@ functions:
       - http:
           path: helloWorld
           method: GET
+          
   getUser:
     handler: lambdas/endpoints/getUser.handler
     events:
@@ -43,6 +46,8 @@ functions:
             path: get-user/{ID}
             method: GET
             cors: true
+            private: true
+
   getPlayerScore:
     handler: lambdas/endpoints/getPlayerScore.handler
     events:
@@ -50,6 +55,7 @@ functions:
             path: get-player-score/{ID}
             method: GET
             cors: true
+
   createPlayerScore:
     handler: lambdas/endpoints/createPlayerScore.handler
     events:
