@@ -18,7 +18,7 @@ exports.handler = async event => {
 			return Responses._400({ message: `Error in S3 write  ${newData}` })
 		}
 
-		return Responses._200({ newUser })
+		return Responses._200({ newData })
 	} catch (err) { 
 		return Responses._500({ message: `Failed: ${err.message}` })
 	}

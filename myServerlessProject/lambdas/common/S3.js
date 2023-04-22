@@ -7,8 +7,8 @@ const S3 = {
 	async write (data, fileName,bucket) {
 		const params = {
 			Bucket: bucket,
-			Body: JSON.stringify(fileName),
-			key: fileName
+			Body: JSON.stringify(data),
+			Key: fileName
 		};
 
 		const newData = await s3Client.putObject(params).promise();
