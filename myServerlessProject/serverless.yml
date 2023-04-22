@@ -15,14 +15,26 @@ provider:
       Resource: '*' 
   apiGateway:
     apiKeys:
-      - MyFirstApiKey
+      - free:
+        - MyFreeApiKey
+      - paid:
+        - MyPaidApiKey
+        - user2PaidApiKey
     usagePlan:
-      quota:
-        limit: 1000
-        period: MONTH
-      throttle:
-        rateLimit: 5
-        burstLimit: 20
+      - free:
+          quota:
+          limit: 1000
+          period: MONTH
+        throttle:
+          rateLimit: 5
+          burstLimit: 20
+      - paid:
+          quota:
+            limit: 1000
+            period: MONTH
+          throttle:
+            burstLimit: 20
+            rateLimit: 5
 
 plugins:
   - serverless-s3-sync
