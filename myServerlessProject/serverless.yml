@@ -16,6 +16,13 @@ provider:
   apiGateway:
     apiKeys:
       - MyFirstApiKey
+    usagePlan:
+      quota:
+        limit: 1000
+        period: MONTH
+      throttle:
+        rateLimit: 5
+        burstLimit: 20
 
 plugins:
   - serverless-s3-sync
