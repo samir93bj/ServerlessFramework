@@ -36,5 +36,3 @@ const Responses = {
 };
 
 module.exports = Responses;
-
-module.exports = Responses
