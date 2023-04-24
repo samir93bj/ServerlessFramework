@@ -6,4 +6,4 @@ provider:
   runtime: nodejs12.x
   
 functions:
- 
+  
