@@ -6,3 +6,9 @@ provider:
   runtime: nodejs12.x
 
 functions:
+    analyseText:
+      handler: lambdas/endpoints/analyse.handler
+      events:
+        - http:
+            path: /analiseText
+            cors: true
