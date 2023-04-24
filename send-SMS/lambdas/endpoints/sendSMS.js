@@ -26,7 +26,7 @@ exports.handler = async event => {
 		await SNS.setSMSAttributes(AttributeParams).promise();
 		await SNS.publish(messageParams).promise();
 
-		return Responses._200({});
+		return Responses._200({message: "Message sended"});
 	} catch (error) {
 		return Responses._500({ message: `Error: ${error.message}`})
 	}
