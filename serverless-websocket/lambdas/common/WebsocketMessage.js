@@ -1,27 +1,24 @@
-const Responses = {
-	_200(data = {}) {
-			return {
-					headers: {
-							'Content-Type': 'application/json',
-							'Access-Control-Allow-Methods': '*',
-							'Access-Control-Allow-Origin': '*',
-					},
-					statusCode: 200,
-					body: JSON.stringify(data),
-			};
-	},
+const AWS = require('aws-sdk');
 
-	_400(data = {}) {
-			return {
-					headers: {
-							'Content-Type': 'application/json',
-							'Access-Control-Allow-Methods': '*',
-							'Access-Control-Allow-Origin': '*',
-					},
-					statusCode: 400,
-					body: JSON.stringify(data),
-			};
-	},
+const create = (domainName, stage) => {
+    const endpoint = `${domainName}/${stage}`;
+    return new AWS.ApiGatewayManagementApi({
+        apiVersion: '2018-11-29',
+        endpoint,
+    });
 };
 
-module.exports = Responses;
+const send = ({ domainName, stage, connectionID, message }) => {
+    const ws = create(domainName, stage);
+
+    const postParams = {
+        Data: message,
+        ConnectionId: connectionID,
+    };
+
+    return ws.postToConnection(postParams).promise();
+};
+
+module.exports = {
+    send,
+};
