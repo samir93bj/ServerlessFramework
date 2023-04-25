@@ -5,10 +5,18 @@ provider:
   name: aws
   runtime: nodejs12.x
 
+plugins:
+    - serverless-offline
+    - serverless-webpack
+
+package:
+    individually: true
+
 functions:
     analyseText:
       handler: lambdas/endpoints/analyse.handler
       events:
         - http:
             path: /analiseText
+            method: POST
             cors: true
