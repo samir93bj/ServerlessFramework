@@ -1,15 +1,22 @@
 const Responses = require('../common/API_responses');
 const Dynamo = require('../common/Dynamo');
+const { useHooks, logEvent, parseEvent, handleUnexpectedError } = require('lambda-hooks');
 
 const tableName = process.env.tableName;
 
-exports.handler = async event => {
+const withHooks = useHooks({
+	before: [logEvent, parseEvent],
+	after:[],
+	onError: [handleUnexpectedError]
+});
+
+const handler = async event => {
 	try {
-		if (!event.pathParameters || !event.pathParameters.ID) {
+		if (!event.pathParameters.ID) {
 			return Responses._400({ message: 'missing the ID from the path' });
 		}
 
-		const user = JSON.parse(event.body);
+		const user = event.body;
 
 		user.ID = event.pathParameters.ID;
 		console.log(user)
@@ -26,3 +33,5 @@ exports.handler = async event => {
 	}
 	
 };
+
+exports.handler = withHooks(handler)
