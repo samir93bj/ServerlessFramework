@@ -5,13 +5,17 @@ provider:
   name: aws
   runtime: nodejs12.x
   iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - ses:*
-      Resource: '*'
+        - Effect: Allow
+          Action:
+              - ses:*
+          Resource: '*'
 
 functions:
-  sendRemainder: 
-    handler: lambdas/scheduleTasks/reminderEmail.handler
-    events:
-      - schedule: cron(0 9 7 * 7 *)
+    sendReminder:
+        handler: lambdas/scheduleTasks/reminderEmail.handler
+        events:
+            - schedule: cron(0 9 ? * 7 *)
+    sendMorningNews:
+        handler: lambdas/scheduleTasks/morningNews.handler
+        events:
+            - schedule: cron(15 7 ? * * *)

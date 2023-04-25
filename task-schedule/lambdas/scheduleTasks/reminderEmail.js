@@ -10,22 +10,22 @@ exports.handler = async event => {
 
 		const params = {
 			Destination: {
-				toAddresses: ['samir93bj@gmail.com']
+					ToAddresses: ['samir93bj@gmail.com'],
 			},
 			Message: {
-				Body: {
-					Text: { Data: message }
-				},
-				subject: { Data: 'Reminder email'}
+					Body: {
+							Text: { Data: message },
+					},
+					Subject: { Data: 'reminder email' },
 			},
-			Source: 'samir93bj@gmail.com'
-		};
+			Source: 'samir93bj@gmail.com',
+	};
 
 		await SES.sendEmail(params).promise();
-		Responses._200({ message: 'email sent'});
+		return Responses._200({ message: 'email sent'});
 
 	} catch (error) {
-		Responses._500({ message: error.message });
+		return Responses._500({ message: error.message });
 	}
 	
 }
