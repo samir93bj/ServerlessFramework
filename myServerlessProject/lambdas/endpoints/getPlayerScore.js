@@ -1,8 +1,15 @@
 const Responses = require('../common/API_responses');
 const Dynamo = require('../common/Dynamo');
-const { withHooks } = require('../common/hooks');
+const { hooksWithValidation } = require('../common/hooks');
+const yup = require('yup');
 
 const tableName = process.env.tableName;
+
+const bodySchema = yup.object().shape({});
+
+const pathSchema = yup.object().shape({
+	ID: yup.string().required()
+});
 
 handler = async event => {
 		try {
@@ -22,9 +29,9 @@ handler = async event => {
 
 		return Responses._200({ user })
 	} catch (error) {
-		return Responses._500({ message: `Error: , ${error.message}`});
+		return Responses._500({ message: `Error: , ${error.errorMessage}`});
 	}
 	
 };
 
-exports.handler =  withHooks(handler);
+exports.handler =  hooksWithValidation({ bodySchema, pathSchema })(handler);
