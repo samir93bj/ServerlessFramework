@@ -8,7 +8,7 @@ const withHooks = useHooks({
 
 const hooksWithValidation = ({ bodySchema, pathSchema }) => {
 	return useHooks({
-		before: [logEvent, parseEvent ],
+		before: [logEvent, parseEvent, validateEventBody, validatePaths ],
 		after:[],
 		onError: [handleUnexpectedError]
 	}, {
