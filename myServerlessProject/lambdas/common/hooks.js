@@ -1,7 +1,7 @@
 const { useHooks, logEvent, parseEvent, handleUnexpectedError } = require('lambda-hooks');
 
 const withHooks = useHooks({
-	before: [logEvent, parseEvent, validateEventBody, validatePaths],
+	before: [logEvent, parseEvent],
 	after:[],
 	onError: [handleUnexpectedError]
 });
@@ -17,6 +17,11 @@ const hooksWithValidation = ({ bodySchema, pathSchema }) => {
 	})
 }
 
+module.exports = {
+	withHooks,
+	hooksWithValidation
+}
+
 const validateEventBody = async state => {
 	try {
 		const { bodySchema } = state.config;
@@ -27,9 +32,9 @@ const validateEventBody = async state => {
 
 		await bodySchema.validate(event.body, { strict: true });
 	} catch (error) {
-		console.log('Yup validation error of event.body ', error.message);
-		state.exit = true
-		state.response = { statusCode: 400, body: JSON.stringify({ error: error.message }) }
+		console.log('Yup validation error of event.body ', error);
+		state.exit = true;
+		state.response = { statusCode: 400, body: JSON.stringify({ error: error.message }) };
 	}
 
 	return state;
@@ -43,17 +48,12 @@ const validatePaths = async state => {
 
 		const { event } = state;
 
-		await pathSchema.validate(event.pathParamethers, { strict: true });
+		await pathSchema.validate(event.pathParameters, { strict: true });
 	} catch (error) {
-		console.log('Yup validation error of path parameters ', error.message);
+		console.log('Yup validation error of path parameters ', error);
 		state.exit = true
-		state.response = { statusCode: 400, body: JSON.stringify({ error: error.message }) }
+		state.response = { statusCode: 400, body: JSON.stringify({ error: error.message }) };
 	}
 
 	return state;
-}
-
-module.exports = {
-	withHooks,
-	hooksWithValidation
 }

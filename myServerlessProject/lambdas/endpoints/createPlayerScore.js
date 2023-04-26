@@ -16,14 +16,8 @@ const pathSchema = yup.object().shape({
 
 const handler = async event => {
 	try {
-		if (!event.pathParameters.ID) {
-			return Responses._400({ message: 'missing the ID from the path' });
-		}
-
 		const user = event.body;
-
 		user.ID = event.pathParameters.ID;
-		console.log(user)
 
 		const newUser = await Dynamo.write(user, tableName)
 
