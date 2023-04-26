@@ -6,6 +6,18 @@ const withHooks = useHooks({
 	onError: [handleUnexpectedError]
 });
 
+const hooksWithValidation = ({ bodySchema, pathSchema }) => {
+	return useHooks({
+		before: [logEvent, parseEvent],
+		after:[],
+		onError: [handleUnexpectedError]
+	}, {
+		bodySchema,
+		pathSchema
+	})
+}
+
 module.exports = {
-	withHooks
+	withHooks,
+	hooksWithValidation
 }
