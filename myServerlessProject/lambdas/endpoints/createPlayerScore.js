@@ -1,6 +1,7 @@
 const Responses = require('../common/API_responses');
 const Dynamo = require('../common/Dynamo');
 const { withHooks } = require('../common/hooks');
+const  yup = require('yup');
 
 const tableName = process.env.tableName;
 
