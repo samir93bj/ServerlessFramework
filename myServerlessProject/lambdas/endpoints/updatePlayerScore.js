@@ -6,11 +6,10 @@ const yup = require('yup')
 const tableName = process.env.tableName;
 
 const bodySchema = yup.object().shape({
-	name: yup.string().optional(),
-	score: yup.number().optional()
+	score: yup.number().required()
 });
 
-const pathParameters = yup.object().shape({
+const pathSchema = yup.object().shape({
 	ID: yup.string().required()
 }); 
 
@@ -27,10 +26,15 @@ const handler = async event => {
 			updateValue: score
 		});
 
-		return Responses._200({ message: `User updated. ${resp}`});
+		const userUpdated = {
+			ID,
+			score
+		}
+
+		return Responses._200({ message: `User updated. ${userUpdated}`});
 	} catch (error) {
-		return Responses._500({ message: `Error: ${error.message}` })
+		return Responses._500({ message: `Error: ${error}` });
 	}
 };
 
-exports.handler = hooksWithValidation({ bodySchema, pathParameters })(handler)
+exports.handler = hooksWithValidation({ bodySchema, pathSchema })(handler)

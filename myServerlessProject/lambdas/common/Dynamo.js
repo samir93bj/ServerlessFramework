@@ -46,7 +46,8 @@ const Dynamo = {
 			UpdateExpression: `set ${updateKey} = :updateValue`,
 			ExpressionAttributeValues: {
 				':updateValue': updateValue
-			}
+			},
+			ReturnValues: 'ALL_NEW'
 		}
 
 		return await documentClient.update(params).promise();
