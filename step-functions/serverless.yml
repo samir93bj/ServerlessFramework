@@ -40,7 +40,7 @@ provider:
 plugins:
   - serverless-offline
   - serverless-webpack
-  - serverless-stepfunctions
+  - serverless-step-functions
 
 package: 
   individually: true
@@ -50,21 +50,29 @@ custom:
   signupTableName: signup-table-name
   bucketName: server1essprojectupload-22321321321
 
-stepFuntions:
-  validate: true
-  stateMachines:
-    reminderEmail:
-      name: reminderEmail
-      events:
-        - http:
-            path: signup-with-reminders
-            method: POST
-            cors: true
-      definition: ${file(./stepFunction.yml)}
+stepFunctions:
+    validate: true
+    stateMachines:
+        reminderEmail:
+            name: reminderEmail
+            events:
+                - http:
+                      path: signup-with-reminders
+                      method: POST
+                      cors: true
+            definition: ${file(./stepFunction.yml)}
+
+functions:
+   addSignup:
+        handler: lambdas/stepFunctionLambdas/addSignup.handler
+    getSignup:
+        handler: lambdas/stepFunctionLambdas/getSignup.handler
+    sendReminderEmail:
+        handler: lambdas/stepFunctionLambdas/sendReminderEmail.handler
 
 resources:
   Resources:
-     MyDynamoDbTable:
+     MyEmailSignUp:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${self:custom.signupTableName}
