@@ -1,0 +1,42 @@
+---
+Comment: A step function to send reminder emails after 24hrs
+StartAt: addEmailToDb
+States:
+  addEmailToDb:
+    Type: Task
+    Resource: arn:aws:states:::lambda:invoke
+    Parameters:
+      FunctionName: arn:aws:lambda:REGION:ACCOUNT_ID:function:FUNCTION_NAME
+      Payload:
+        Input.$: "$"
+    Next: wait for 24hr
+  wait for 24hr:
+    Type: Wait
+    Seconds: 86400
+    Next: Read DB
+  Read DB:
+    Type: Task
+    Resource: arn:aws:states:::lambda:invoke
+    Parameters:
+      FunctionName: arn:aws:lambda:REGION:ACCOUNT_ID:function:FUNCTION_NAME
+      Payload:
+        Input.$: "$"
+    Next: has played
+  has played:
+    Type: Choice
+    Choices:
+    - Not:
+        Variable: "$.type"
+        StringEquals: Private
+      Next: close
+    Default: send reminder email
+  send reminder email:
+    Type: Task
+    Resource: arn:aws:states:::lambda:invoke
+    Parameters:
+      FunctionName: arn:aws:lambda:REGION:ACCOUNT_ID:function:FUNCTION_NAME
+      Payload:
+        Input.$: "$"
+    Next: close
+  close:
+    Type: Succeed
