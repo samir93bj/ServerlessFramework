@@ -6,7 +6,7 @@ States:
     Type: Task
     Resource: arn:aws:states:::lambda:invoke
     Parameters:
-      FunctionName: arn:aws:lambda:REGION:ACCOUNT_ID:function:FUNCTION_NAME
+      FunctionName: {"Fn::Join": [":", ["arn:aws:lambda:eu-east-1", { "Ref":"AWS::AccountId"}, "function:${self:service}-${self:provider.state}-addSignup}"]]}
       Payload:
         Input.$: "$"
     Next: wait for 24hr
@@ -18,9 +18,9 @@ States:
     Type: Task
     Resource: arn:aws:states:::lambda:invoke
     Parameters:
-      FunctionName: arn:aws:lambda:REGION:ACCOUNT_ID:function:FUNCTION_NAME
+      FunctionName: {"Fn::Join": [":", ["arn:aws:lambda:eu-east-1", { "Ref":"AWS::AccountId"}, "function:${self:service}-${self:provider.state}-getSignup}"]]}
       Payload:
-        Input.$: "$"
+        Input.$: "$" 
     Next: has played
   has played:
     Type: Choice
@@ -34,7 +34,7 @@ States:
     Type: Task
     Resource: arn:aws:states:::lambda:invoke
     Parameters:
-      FunctionName: arn:aws:lambda:REGION:ACCOUNT_ID:function:FUNCTION_NAME
+      FunctionName: {"Fn::Join": [":", ["arn:aws:lambda:eu-east-1", { "Ref":"AWS::AccountId"}, "function:${self:service}-${self:provider.state}-sendReminderEmail}"]]}
       Payload:
         Input.$: "$"
     Next: close
