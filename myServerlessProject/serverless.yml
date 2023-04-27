@@ -96,6 +96,15 @@ functions:
           cors: true
           private: true
 
+  getGameScores:
+    handler: lambdas/endpoints/getGameScores.handler
+    events:
+      - http:
+          path: get-game-scores/{ID}
+          method: PUT
+          cors: true
+          private: true
+
   createFile:
       handler: lambdas/endpoints/createFile.handler
       events:

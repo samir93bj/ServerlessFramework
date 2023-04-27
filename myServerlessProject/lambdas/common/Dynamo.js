@@ -19,7 +19,6 @@ const Dynamo = {
 
 		return data.Item;
 	},
-
 	async write (data, TableName) {
 		if (!data.ID ) {
 			throw Error(`No ID on the database`);
@@ -38,7 +37,6 @@ const Dynamo = {
 
 		return data
 	},
-
 	async update ({ tableName, primaryKey, primaryKeyValue, updateKey, updateValue }){
 		const params = {
 			TableName: tableName,
@@ -51,6 +49,20 @@ const Dynamo = {
 		}
 
 		return await documentClient.update(params).promise();
+	},
+	async query ({ tableName, index, queryKey, queryValue }) {
+		const params = {
+			TableName: tableName,
+			IndexName: index,
+			KeyConditionExpression: `${queryKey} = :hkey`,
+			ExpressionAttributeValues: {
+				':hkey': queryValue
+			}
+		}
+
+		const res = await documentClient.query(params).promise();
+
+		return res.Items || []
 	}
 }
 
