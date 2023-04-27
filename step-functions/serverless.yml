@@ -6,6 +6,7 @@ provider:
   runtime: nodejs12.x
   environment:
     tableName: ${self:custom.tableName}
+    signupTableName: ${self:custom.signupTableName}
     bucketName: ${self:custom.bucketName}
   iamRoleStatements:
     - Effect: Allow
@@ -43,3 +44,36 @@ plugins:
 
 package: 
   individually: true
+
+custom:
+  tableName: player-points
+  signupTableName: signup-table-name
+  bucketName: server1essprojectupload-22321321321
+
+stepFuntions:
+  validate: true
+  stateMachines:
+    reminderEmail:
+      name: reminderEmail
+      events:
+        - http:
+            path: signup-with-reminders
+            method: POST
+            cors: true
+      definition: ${file(./stepFunction.yml)}
+
+resources:
+  Resources:
+     MyDynamoDbTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.signupTableName}
+        AttributeDefinitions:
+          - AttributeName: ID
+            AttributeType: S
+          - AttributeName: game
+            AttributeType: S
+        KeySchema:
+          - AttributeName: ID
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
