@@ -100,8 +100,8 @@ functions:
     handler: lambdas/endpoints/getGameScores.handler
     events:
       - http:
-          path: get-game-scores/{ID}
-          method: PUT
+          path: get-game-scores/{game}
+          method: GET
           cors: true
           private: true
 
