@@ -100,7 +100,7 @@ functions:
     handler: lambdas/endpoints/getGameScores.handler
     events:
       - http:
-          path: get-game-scores/{game}
+          path: get-game-score/{game}
           method: GET
           cors: true
           private: true

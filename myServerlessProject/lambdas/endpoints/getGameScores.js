@@ -1,5 +1,14 @@
 const Responses = require('../common/API_Responses');
 const Dynamo = require('../common/Dynamo');
+const { hooksWithValidation } = require('../common/hooks');
+const yup = require('yup');
+
+
+const bodySchema = yup.object().shape({});
+
+const pathSchema = yup.object().shape({
+	game: yup.string().required()
+});
 
 const handler = async (event) => {
 	try {
@@ -19,3 +28,5 @@ const handler = async (event) => {
 		return Responses._500({message: `Error: ${error}`} );
 	}
 }
+
+exports.handler =  hooksWithValidation({ bodySchema, pathSchema })(handler);
