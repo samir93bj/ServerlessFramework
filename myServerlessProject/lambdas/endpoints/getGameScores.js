@@ -1,14 +1,8 @@
 const Responses = require('../common/API_Responses');
 const Dynamo = require('../common/Dynamo');
-const { hooksWithValidation } = require('../common/hooks');
-const yup = require('yup');
+const { withHooks } = require('../common/hooks');
 
-
-const bodySchema = yup.object().shape({});
-
-const pathSchema = yup.object().shape({
-	game: yup.string().required()
-});
+const tableName = process.env.tableName;
 
 const handler = async (event) => {
 	try {
@@ -20,7 +14,8 @@ const handler = async (event) => {
 		const gamePLayers = await Dynamo.query({
 			tableName,
 			index: 'game-index',
-			queryKey: game
+			queryKey: 'game',
+			queryValue: game,
 		})
 
 		return Responses._200({ gamePLayers });
@@ -29,4 +24,4 @@ const handler = async (event) => {
 	}
 }
 
-exports.handler =  hooksWithValidation({ bodySchema, pathSchema })(handler);
+exports.handler =  withHooks(handler);
