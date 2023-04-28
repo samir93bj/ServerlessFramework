@@ -25,7 +25,7 @@ exports.handler = async event => {
         }
 
         const buffer = Buffer.from(imageData, 'base64');
-        const fileInfo = await fileType.fromBuffer(buffer);
+        const fileInfo = await fileType.fileTypeFromBuffer(buffer);
         const detectedExt = fileInfo.ext;
         const detectedMime = fileInfo.mime;
 
