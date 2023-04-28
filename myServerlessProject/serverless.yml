@@ -134,6 +134,15 @@ functions:
                 cors: true
                 private: true              
 
+  imageUpload:
+        handler: lambdas/endpoints/imageUpload.handler
+        events:
+          - http:
+                path: image-upload
+                method: POST
+                cors: true
+                private: true   
+
   proxy:
     handler: lambdas/endpoints/proxy.handler
     events:
