@@ -52,7 +52,7 @@ custom:
   s3Sync:
     - bucketName: server1essprojectupload-22321321321
       localDir: UploadData
-  imageUploadBucket: my-image-upload-bucket-demo-sws
+  imageUploadBucket: my-image-upload-bucket-demo-sws-22333223
   
 functions:
   helloWorld:
@@ -166,8 +166,7 @@ resources:
     ImageUploadBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self.custom.imageUploadBucket}
-        AccessControl: PublicRead
+        BucketName: my-image-upload-bucket-demo-sws-22333223
 
     MyDynamoDbTable:
       Type: AWS::DynamoDB::Table
