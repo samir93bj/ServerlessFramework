@@ -19,3 +19,17 @@ exports.handler = async event => {
 		return Responses._500({ message: `Error: , ${error.message}`});
 	}
 };
+
+const resizeImage = async ({ bucket, file, width, height }) => {
+	const imageBuffer = await S3.get(file, bucket);
+	const jimpImage = await jimp.read(imageBuffer.Body);
+	const mime = jimpImage.getMIME();
+
+	const resizedImageBuffer = await jimpImage.scaleToFit(width, height).getBufferAsync(mime);
+
+	const shortFileName = file.split('/')[1];
+	const newFileName = `resized/${width}x${height}/${shortFileName}`;
+
+	await S3.write(resizedImageBuffer, newFileName, bucket, 'public-read', mime);
+	return newFileName;
+};
