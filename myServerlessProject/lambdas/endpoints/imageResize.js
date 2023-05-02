@@ -1,4 +1,6 @@
-const Responses = require('../common/API_Responses');
+import Responses from ('../common/API_Responses');
+import S3 from '../common/S3';
+import jimp from 'jimp';
 
 exports.handler = async event => {
 	try {
